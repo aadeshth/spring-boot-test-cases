@@ -30,8 +30,7 @@ class SchoolServiceImplTest {
 
     @Test
     void saveSchool() {
-        School school = new School(1L, "Test");
-        when(schoolRepository.save(ArgumentMatchers.any(School.class))).thenReturn(school);
+        when(schoolRepository.save(ArgumentMatchers.any(School.class))).thenReturn(School.builder().id(1L).name("Test").build());
         SchoolDto schoolDto = schoolService.saveSchool(SchoolDto.builder().name("Test").build());
         assertEquals("Test",schoolDto.getName());
         assertEquals(1L,schoolDto.getId());

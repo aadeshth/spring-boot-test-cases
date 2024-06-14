@@ -3,7 +3,6 @@ package com.springboot.crudoperation.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.springboot.crudoperation.model.ResponseDto;
 import com.springboot.crudoperation.model.SchoolDto;
 import com.springboot.crudoperation.service.SchoolService;
 import org.junit.jupiter.api.Test;
@@ -20,9 +19,9 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -51,7 +50,7 @@ public class SchoolControllerTest {
     @Test
     public void getSchoolDetailsPathTest2() throws Exception {
         SchoolDto schoolDto = SchoolDto.builder().id(1L).build();
-        Mockito.when(schoolService.findSchoolById(1)).thenReturn(schoolDto);
+        when(schoolService.findSchoolById(1)).thenReturn(schoolDto);
        mockMvc.perform(MockMvcRequestBuilders
                .get("/school/1")
                .accept(MediaType.APPLICATION_JSON))
@@ -63,7 +62,7 @@ public class SchoolControllerTest {
     @Test
     public void createSchoolTest() throws Exception {
             SchoolDto schoolDto = SchoolDto.builder().id(1L).build();
-        Mockito.when(schoolService.saveSchool(any())).thenReturn(schoolDto);
+        when(schoolService.saveSchool(any())).thenReturn(schoolDto);
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/school").content(objectToJsonString(SchoolDto.builder().name("Test case").address("Test").build()))
                 .contentType(MediaType.APPLICATION_JSON)

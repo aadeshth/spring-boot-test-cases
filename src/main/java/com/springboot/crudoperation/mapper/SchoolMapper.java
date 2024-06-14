@@ -7,6 +7,7 @@ import com.springboot.crudoperation.model.SchoolDto;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,13 +39,19 @@ public class SchoolMapper {
     }
 
     private static List<ClassRoom> convertClassRoomDtoToEntity(List<ClassRoomDto> aDto) {
-        return aDto.stream()
-                .map(dto -> ClassRoom.builder().floor(dto.getFloor()).grade(dto.getGrade()).strength(dto.getStrength()).name(dto.getName()).build())
-                .collect(Collectors.toList());
+        if(aDto!=null) {
+            return aDto.stream()
+                    .map(dto -> ClassRoom.builder().floor(dto.getFloor()).grade(dto.getGrade()).strength(dto.getStrength()).name(dto.getName()).build())
+                    .collect(Collectors.toList());
+        }else
+            return new ArrayList<>();
     }
     private static List<ClassRoomDto> convertClassRoomListToDtoList(List<ClassRoom> classRooms) {
+        if(classRooms != null)
         return classRooms.stream()
                 .map(classRoom -> ClassRoomDto.builder().floor(classRoom.getFloor()).grade(classRoom.getGrade()).strength(classRoom.getStrength()).name(classRoom.getName()).build())
                 .collect(Collectors.toList());
+        else
+            return new ArrayList<>();
     }
 }

@@ -25,14 +25,18 @@ import java.util.stream.Collectors;
 @Service
 public class SchoolServiceImpl implements SchoolService {
 
+    private final SchoolRepository schoolRepository;
+
     @Autowired
-    SchoolRepository schoolRepository;
+    public SchoolServiceImpl(SchoolRepository schoolRepository) {
+        this.schoolRepository = schoolRepository;
+    }
+
     @Override
     public SchoolDto saveSchool(SchoolDto schoolDto) {
         SchoolDataValidation.requestValidation(schoolDto);
         School school = SchoolMapper.mapToSchool(schoolDto,"Admin");
-        schoolRepository.save(school);
-        schoolDto.setId(school.getId());
+        schoolDto.setId(schoolRepository.save(school).getId());
     return schoolDto;
     }
 
